@@ -61,6 +61,16 @@
         "examDurationInMinutes": 120
       },
       {
+        "id": "cka-mock-02",
+        "assetPath": "assets/exams/cka/mock-02",
+        "name": "CKA Mock Exam 02",
+        "category": "CKA",
+        "description": "Second full realistic mock exam across all CKA domains.",
+        "warmUpTimeInSeconds": 120,
+        "difficulty": "Hard",
+        "examDurationInMinutes": 120
+      },
+      {
         "id": "docker-001",
         "assetPath": "assets/exams/other/001",
         "name": "Docker Speed Run - Core Concepts",
