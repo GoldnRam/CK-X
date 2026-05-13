@@ -1,0 +1,143 @@
+{
+  "questions": [
+    {
+      "id": "1",
+      "namespace": "production",
+      "machineHostname": "controlplane",
+      "question": "A pod named `app-frontend` in namespace `production` is stuck in `CrashLoopBackOff`. The pod's container is looking for a configuration file at `/etc/app/config.yaml`, but this file doesn't exist in the image.\n\nYou need to:\n1. Create a ConfigMap named `app-config` with the file content: `database_host: postgres.production.svc.cluster.local`\n2. Mount this ConfigMap as a file at `/etc/app/config.yaml` in the pod\n3. Verify the pod starts successfully\n\nThe pod manifest already exists; you only need to update it.\n",
+      "concepts": [
+        "pods",
+        "configmaps",
+        "troubleshooting"
+      ],
+      "verification": [
+        {
+          "id": "1",
+          "description": "ConfigMap exists",
+          "verificationScriptFile": "q1_v1.sh",
+          "expectedOutput": "0",
+          "weightage": 2
+        },
+        {
+          "id": "2",
+          "description": "ConfigMap has correct content",
+          "verificationScriptFile": "q1_v2.sh",
+          "expectedOutput": "0",
+          "weightage": 2
+        },
+        {
+          "id": "3",
+          "description": "Pod is running",
+          "verificationScriptFile": "q1_v3.sh",
+          "expectedOutput": "0",
+          "weightage": 3
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "namespace": "staging",
+      "machineHostname": "controlplane",
+      "question": "A developer needs to be able to list Deployments and Pods in the `staging` namespace, but not in other namespaces. Currently, they cannot perform these actions.\n\nCreate:\n1. A Role that allows listing Pods and Deployments in `staging` named `dev-role`\n2. A RoleBinding that grants this Role to the user `dev-user` named `dev-binding`\n\nVerify the permissions work using `kubectl auth can-i`.\n",
+      "concepts": [
+        "rbac",
+        "security"
+      ],
+      "verification": [
+        {
+          "id": "1",
+          "description": "Role exists with correct permissions",
+          "verificationScriptFile": "q2_v1.sh",
+          "expectedOutput": "0",
+          "weightage": 3
+        },
+        {
+          "id": "2",
+          "description": "RoleBinding exists and binds user",
+          "verificationScriptFile": "q2_v2.sh",
+          "expectedOutput": "0",
+          "weightage": 2
+        },
+        {
+          "id": "3",
+          "description": "User can list pods in staging",
+          "verificationScriptFile": "q2_v3.sh",
+          "expectedOutput": "0",
+          "weightage": 2
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "namespace": "default",
+      "machineHostname": "controlplane",
+      "question": "Node `worker-1` needs maintenance and will be offline for 1 hour.\n\n1. Prepare the node for maintenance without losing pod data\n2. Verify the node is ready for maintenance\n",
+      "concepts": [
+        "nodes",
+        "maintenance"
+      ],
+      "verification": [
+        {
+          "id": "1",
+          "description": "Node worker-1 is unschedulable",
+          "verificationScriptFile": "q3_v1.sh",
+          "expectedOutput": "0",
+          "weightage": 5
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "namespace": "databases",
+      "machineHostname": "controlplane",
+      "question": "An application needs persistent storage that:\n1. Size: 5Gi\n2. Access mode: can be used by multiple pods simultaneously (ReadWriteMany)\n3. Storage class: `fast-ssd`\n4. Name of PVC: `db-pvc`\n\nCreate the PV named `db-pv` (hostPath `/data`) and the PVC `db-pvc` in the `databases` namespace.\n",
+      "concepts": [
+        "storage",
+        "pv",
+        "pvc"
+      ],
+      "verification": [
+        {
+          "id": "1",
+          "description": "PV exists with correct specs",
+          "verificationScriptFile": "q4_v1.sh",
+          "expectedOutput": "0",
+          "weightage": 3
+        },
+        {
+          "id": "2",
+          "description": "PVC exists and is bound",
+          "verificationScriptFile": "q4_v2.sh",
+          "expectedOutput": "0",
+          "weightage": 3
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "namespace": "shop",
+      "machineHostname": "controlplane",
+      "question": "Currently, all pods in namespace `shop` can communicate with each other. You need to implement network isolation using a NetworkPolicy named `backend-policy`:\n1. Backend pods (label: `tier=backend`) can receive traffic from frontend pods (label: `tier=frontend`) on port 3000 only.\n",
+      "concepts": [
+        "networking",
+        "networkpolicy"
+      ],
+      "verification": [
+        {
+          "id": "1",
+          "description": "NetworkPolicy exists",
+          "verificationScriptFile": "q5_v1.sh",
+          "expectedOutput": "0",
+          "weightage": 2
+        },
+        {
+          "id": "2",
+          "description": "Policy allows traffic from frontend on port 3000",
+          "verificationScriptFile": "q5_v2.sh",
+          "expectedOutput": "0",
+          "weightage": 3
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "questions": [
+    {
+      "id": "1",
+      "namespace": "backend",
+      "machineHostname": "controlplane",
+      "question": "An application in namespace `backend` needs to call a service in namespace `frontend` via DNS. The service name is `web-ui` and it exposes port 3000.\n\nThe application's configuration needs the full DNS name to connect. What is the correct DNS name within the cluster that the backend application should use?\n\nWrite the exact DNS name to a file `/tmp/exam/q1_dns_name.txt`.\n\nAlso, verify that pod-to-pod DNS resolution works using nslookup or dig from a test pod.\n",
+      "concepts": [
+        "dns",
+        "services",
+        "troubleshooting"
+      ],
+      "verification": [
+        {
+          "id": "1",
+          "description": "Correct DNS name in file",
+          "verificationScriptFile": "q1_v1.sh",
+          "expectedOutput": "0",
+          "weightage": 5
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "namespace": "default",
+      "machineHostname": "controlplane",
+      "question": "A deployment `payment-service` has been updated with a new image version that introduced a bug. Users are reporting errors. You need to:\n1. Check the deployment's rollout history\n2. Identify which revision had the issue\n3. Rollback to the previous stable version\n4. Verify the rollback completed successfully\n",
+      "concepts": [
+        "deployments",
+        "rollout",
+        "rollback"
+      ],
+      "verification": [
+        {
+          "id": "1",
+          "description": "Deployment rolled back to 1.25",
+          "verificationScriptFile": "q2_v1.sh",
+          "expectedOutput": "0",
+          "weightage": 5
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "namespace": "default",
+      "machineHostname": "controlplane",
+      "question": "A pod needs access to database credentials:\n- Username: `dbuser`\n- Password: `secret123`\n- Database: `appdb`\n\nCreate a Secret named `db-creds` and mount it in a deployment named `app-deploy` as environment variables (not as files).\n\nVerify that the pod can access these environment variables without exposing them in pod logs.\n",
+      "concepts": [
+        "secrets",
+        "pods",
+        "envvars"
+      ],
+      "verification": [
+        {
+          "id": "1",
+          "description": "Secret exists",
+          "verificationScriptFile": "q3_v1.sh",
+          "expectedOutput": "0",
+          "weightage": 2
+        },
+        {
+          "id": "2",
+          "description": "Deployment mounts secret as env vars",
+          "verificationScriptFile": "q3_v2.sh",
+          "expectedOutput": "0",
+          "weightage": 3
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "namespace": "default",
+      "machineHostname": "controlplane",
+      "question": "A monitoring agent needs to run on every node in the cluster, including control plane nodes. Currently, some nodes are missing the agent due to taints.\n\nCreate or update a DaemonSet named `monitoring-agent` to:\n1. Run the `datadog/agent:latest` image on all nodes\n2. Tolerate the taint `node-role.kubernetes.io/control-plane:NoSchedule`\n3. Verify the agent is running on all nodes\n",
+      "concepts": [
+        "daemonsets",
+        "tolerations",
+        "taints"
+      ],
+      "verification": [
+        {
+          "id": "1",
+          "description": "DaemonSet exists",
+          "verificationScriptFile": "q4_v1.sh",
+          "expectedOutput": "0",
+          "weightage": 2
+        },
+        {
+          "id": "2",
+          "description": "DaemonSet has correct toleration",
+          "verificationScriptFile": "q4_v2.sh",
+          "expectedOutput": "0",
+          "weightage": 3
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "namespace": "default",
+      "machineHostname": "controlplane",
+      "question": "The API server appears to be responding slowly. You need to:\n1. Check the API server logs for errors or warnings\n2. Verify the API server is listening on port 6443\n\nWrite the command you would use to check the API server logs to a file `/tmp/exam/q5_command.txt`.\n",
+      "concepts": [
+        "troubleshooting",
+        "apiserver"
+      ],
+      "verification": [
+        {
+          "id": "1",
+          "description": "Correct command in file",
+          "verificationScriptFile": "q5_v1.sh",
+          "expectedOutput": "0",
+          "weightage": 5
+        }
+      ]
+    }
+  ]
+}

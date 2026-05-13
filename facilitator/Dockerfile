@@ -11,7 +11,7 @@ RUN apk add --no-cache openssh-client
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci --only=production
+RUN npm install --omit=dev
 
 # Bundle app source
 COPY . .
@@ -39,8 +39,9 @@ EXPOSE 3000
 # Copy entrypoint.sh to /usr/src/app
 COPY entrypoint.sh /home/nodeuser/entrypoint.sh
 
-# Make entrypoint.sh executable
-RUN chmod +x /home/nodeuser/entrypoint.sh
+# Make entrypoint.sh executable and fix windows CRLF line endings
+RUN sed -i 's/\r$//' /home/nodeuser/entrypoint.sh && \
+    chmod +x /home/nodeuser/entrypoint.sh
 
 # Switch to non-root user
 USER nodeuser
